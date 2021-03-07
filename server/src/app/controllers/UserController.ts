@@ -1,4 +1,4 @@
-import { json, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import * as Yup from 'yup';
 import User from '../models/User';
@@ -31,7 +31,7 @@ class UserController {
 
     const UserRepository = getRepository(User);
 
-    const userExists = UserRepository.findOne({ where: email });
+    const userExists = await UserRepository.findOne({ email });
 
     if (userExists) {
       return res.status(400).json({ error: 'User already exists' });
