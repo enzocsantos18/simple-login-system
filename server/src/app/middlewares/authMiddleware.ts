@@ -9,7 +9,11 @@ interface TokenPayloadInterface {
   exp: number;
 }
 
-function authMiddlware(req: Request, res: Response, next: NextFunction) {
+function authMiddlware(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Response | void {
   const { authorization } = req.headers;
 
   if (!authorization) {

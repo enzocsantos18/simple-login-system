@@ -72,6 +72,59 @@ class UserController {
 
     return res.sendStatus(200);
   }
+
+  async update(req: Request, res: Response) {
+    const { email, password, name } = req.body;
+    const { id } = req.params;
+    const { userId } = req;
+
+    const userSchema = Yup.object().shape({
+      name: Yup.string().min(3),
+      email: Yup.string().email(),
+      password: Yup.string().min(8).max(16),
+      password_confirmation: Yup.string()
+        .oneOf([Yup.ref('password'), null], 'Passwords must match')
+        .required(),
+    });
+
+    if (id !== userId) {
+      return res.sendStatus(403);
+    }
+
+    try {
+      await userSchema.validate(req.body);
+    } catch (e) {
+      return res.status(400).json(e.errors);
+    }
+
+    const UserRepository = getRepository(User);
+
+    const user = await UserRepository.findOne({ id });
+
+    if (!user) {
+      return res.sendStatus(401);
+    }
+
+    if (email) {
+      const userExists = await UserRepository.findOne({ email });
+      if (userExists) {
+        return res.status(400).json({ error: 'User already exists' });
+      }
+
+      user.email = email;
+      user.isConfirmed = false;
+    }
+    if (name) {
+      user.name = name;
+    }
+    if (password) {
+      user.password = password;
+    }
+
+    await UserRepository.save(user);
+
+    return res.json({ id: user.id, name: user.name, email: user.email });
+  }
 }
 
 export default new UserController();
