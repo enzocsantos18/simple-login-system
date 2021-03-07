@@ -3,6 +3,7 @@ import { getRepository } from 'typeorm';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
+import * as Yup from 'yup';
 import User from '../models/User';
 import mailer from '../services/mailer';
 
@@ -74,6 +75,64 @@ class AuthController {
       return res
         .status(400)
         .send({ error: 'Error on forgot password, try again' });
+    }
+  }
+
+  async resetPassword(req: Request, res: Response) {
+    const { email, token, password } = req.body;
+
+    const userSchema = Yup.object().shape({
+      email: Yup.string().required('Email is required').email(),
+      password: Yup.string().required('Password is required').min(8).max(16),
+      password_confirmation: Yup.string()
+        .oneOf([Yup.ref('password'), null], 'Passwords must match')
+        .required(),
+    });
+
+    try {
+      await userSchema.validate(req.body);
+    } catch (e) {
+      return res.json(e);
+    }
+
+    const repository = getRepository(User);
+    try {
+      const user = await repository.findOneOrFail(
+        { email },
+        { select: ['passwordResetExpires', 'passwordResetToken'] },
+      );
+
+      if (!user) {
+        return res.status(400).send({ error: 'User not found' });
+      }
+
+      if (token !== user.passwordResetToken)
+        return res.status(400).send({ error: 'Invalid token' });
+
+      const now = new Date();
+
+      if (now > user.passwordResetExpires)
+        return res
+          .status(400)
+          .send({ error: 'Token expired, generate a new one' });
+
+      const newPassword = await bcrypt.hash(password, 8);
+
+      await repository.update(
+        { email },
+        {
+          password: newPassword,
+          isConfirmed: true,
+          passwordResetExpires: undefined,
+          passwordResetToken: undefined,
+        },
+      );
+
+      return res.send();
+    } catch (err) {
+      return res
+        .status(400)
+        .send({ error: 'Error on password reset, try again' });
     }
   }
 }
