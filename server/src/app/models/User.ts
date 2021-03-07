@@ -1,6 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BeforeInsert,
+  BeforeUpdate,
+} from 'typeorm';
+import bcrypt from 'bcrypt';
 
-@Entity()
+@Entity('users')
 class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -9,10 +16,19 @@ class User {
   name: string;
 
   @Column()
+  email: string;
+
+  @Column()
   password: string;
 
   @Column()
   isConfirmed: boolean;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  hashPassword(): void {
+    this.password = bcrypt.hashSync(this.password, 8);
+  }
 }
 
 export default User;
