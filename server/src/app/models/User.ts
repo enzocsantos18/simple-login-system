@@ -24,6 +24,12 @@ class User {
   @Column()
   isConfirmed: boolean;
 
+  @Column('text', { nullable: true, select: false })
+  passwordResetToken: string;
+
+  @Column('timestamptz', { nullable: true, select: false })
+  passwordResetExpires: Date;
+
   @BeforeInsert()
   @BeforeUpdate()
   hashPassword(): void {
