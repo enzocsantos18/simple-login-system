@@ -51,6 +51,27 @@ class UserController {
       email: user.email,
     });
   }
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+    const { userId } = req;
+
+    if (id !== userId) {
+      return res.sendStatus(403);
+    }
+
+    const UserRepository = getRepository(User);
+
+    const user = await UserRepository.findOne({ id });
+
+    if (!user) {
+      return res.sendStatus(403);
+    }
+
+    await UserRepository.delete(user);
+
+    return res.sendStatus(200);
+  }
 }
 
 export default new UserController();

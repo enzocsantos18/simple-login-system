@@ -9,8 +9,5 @@ routes.post('/users', UserController.store);
 
 routes.post('/auth', AuthController.authenticate);
 routes.use(authMiddlware);
-routes.get('/', (req, res) => {
-  return res.json({ userId: req.userId });
-});
-
+routes.delete('/users/:id', UserController.delete);
 export default routes;
