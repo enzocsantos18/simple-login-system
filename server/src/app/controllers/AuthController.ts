@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import User from '../models/User';
+import mailer from '../services/mailer';
 
 class AuthController {
   async authenticate(req: Request, res: Response) {
@@ -23,7 +24,7 @@ class AuthController {
 
     const token = await jwt.sign(
       { id: user.id, name: user.name, isConfirmed: user.isConfirmed },
-      'JSONWEBTOKEN',
+      String(process.env.JWT_SECRET),
       { expiresIn: '7d' },
     );
 
@@ -53,6 +54,19 @@ class AuthController {
       await userRepository.update(
         { email },
         { passwordResetToken: token, passwordResetExpires: now },
+      );
+
+      mailer.sendMail(
+        {
+          to: email,
+          from: 'enzocsantos18@gmail.com',
+          html: `<p>Para trocar sua senha <a href="http://localhost:3000/auth/reset?token=${token}">Clique aqui</a></p>`,
+        },
+        err => {
+          return res
+            .status(400)
+            .send({ error: 'Cannot send password reset email' });
+        },
       );
 
       return res.send();

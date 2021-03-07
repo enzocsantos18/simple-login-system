@@ -1,0 +1,10 @@
+const mailerConfig = {
+  host: '',
+  port: 1111,
+  auth: {
+    user: '',
+    pass: '',
+  },
+};
+
+export default mailerConfig;
