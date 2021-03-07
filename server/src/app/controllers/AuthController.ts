@@ -23,7 +23,7 @@ class AuthController {
 
     const token = await jwt.sign(
       { id: user.id, name: user.name, isConfirmed: user.isConfirmed },
-      'JSONWEEBTOKEN',
+      'JSONWEBTOKEN',
       { expiresIn: '7d' },
     );
 
