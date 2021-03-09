@@ -4,7 +4,22 @@ import React from 'react';
 
 const Register: React.FC = () => {
   return (
-    <h1>Register</h1>
+    <main>
+      <div className="container">
+        <h1>Register</h1>
+        <form>
+        <label htmlFor="name">Name:</label>
+          <input type="text" name="name"/>
+          <label htmlFor="email">Email:</label>
+          <input type="text" name="email"/>
+
+          <label htmlFor="email">Password:</label>
+          <input type="text" name="email"/>
+
+          <button>Confirm</button>
+        </form>
+      </div>
+    </main>
   );
 }
 
