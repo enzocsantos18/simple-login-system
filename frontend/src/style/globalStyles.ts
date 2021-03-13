@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
- 
+import 'react-toastify/dist/ReactToastify.css';
+
 const GlobalStyle = createGlobalStyle`
   *, body {
     margin: 0;
@@ -41,9 +42,14 @@ const GlobalStyle = createGlobalStyle`
     background: #FFF;
     border: 1px solid #babaca;
     color: black;
-    margin: 8px 0px 16px 0px;
+    margin: 8px 0px 8px 0px;
     padding: 0px 1em 0px;
     border-radius: 5px;
+  }
+
+  form span{
+    display: block;
+    margin-bottom: 8px;
   }
 
   form button{
@@ -52,6 +58,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: #ffce2b;
     font-weight: bold;
     height: 50px;
+    margin-top: 10px;
     width: 100%;
     transition: all 0.2s ease-in-out;
     font-size: 16px;

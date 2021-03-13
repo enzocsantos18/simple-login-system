@@ -17,7 +17,7 @@ const Routes: React.FC = () => {
         <Route exact path="/"><Login/></Route>
         <Route path="/register"><Register/></Route>
         <Route path="/forgot"><Forgot/></Route>
-        <Route path="/auth/passwordChange"><ChangePassword/></Route>
+        <Route path="/auth/reset"><ChangePassword/></Route>
       </Switch>
     </Router>
   );
