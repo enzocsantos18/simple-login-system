@@ -8,9 +8,13 @@ import ChangePassword from './pages/ChangePassword';
 import Forgot from './pages/Forgot';
 import Login from './pages/Login';
 import Register from './pages/Register';
-
+import { UserContext } from './providers/UserProvider';
 
 const Routes: React.FC = () => {
+  const {token} = React.useContext(UserContext);
+
+
+
   return (
     <Router>
       <Switch>
