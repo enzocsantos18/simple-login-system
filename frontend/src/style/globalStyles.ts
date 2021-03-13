@@ -53,8 +53,15 @@ const GlobalStyle = createGlobalStyle`
     font-weight: bold;
     height: 50px;
     width: 100%;
-
+    transition: all 0.2s ease-in-out;
     font-size: 16px;
+  }
+
+  form button:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+    background-color: #f0b802;
+   
   }
 
   form a{
