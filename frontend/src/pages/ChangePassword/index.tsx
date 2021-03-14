@@ -80,8 +80,8 @@ const ChangePassword: React.FC = (props) => {
       <div className="container">
         <h1>Change Password</h1>
         <Form onSubmit={handleSubmit} ref={formRef}>
-          <Input label="Password:" type="password" name="password" />
-          <Input label="Password Confirmation:" type="password" name="password_confirmation" />
+          <Input label="Password:" maxLength={16} type="password" name="password" />
+          <Input label="Password Confirmation:" maxLength={16} type="password" name="password_confirmation" />
           <button>Change Password</button>
         </Form>
       </div>

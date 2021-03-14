@@ -50,6 +50,7 @@ const Register: React.FC = () => {
       console.log(response);
 
       formRef.current?.setErrors({} as validationErros);
+      toast.success("User created.");
 
       history.push("/");
     } catch (err) {
@@ -78,8 +79,8 @@ const Register: React.FC = () => {
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Input label="Name:" type="text" name="name" />
           <Input label="Email:" type="text" name="email" />
-          <Input label="Password:" type="password" name="password" />
-          <Input label="Password Confirmation:" type="password" name="password_confirmation" />
+          <Input label="Password:" maxLength={16} type="password" name="password" />
+          <Input label="Password Confirmation:" maxLength={16} type="password" name="password_confirmation" />
 
           <button>Confirm</button>
         </Form>

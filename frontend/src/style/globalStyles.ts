@@ -43,7 +43,7 @@ const GlobalStyle = createGlobalStyle`
     border: 1px solid #babaca;
     color: black;
     margin: 8px 0px 8px 0px;
-    padding: 0px 1em 0px;
+    padding: 0px 1em 0px 1em;
     border-radius: 5px;
   }
 
@@ -76,6 +76,24 @@ const GlobalStyle = createGlobalStyle`
     color: #696969;
     margin: 10px 0px;
   }
+
+  .inputField{
+    position: relative;
+
+  }
+
+  .inputField span{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    margin: 0;
+    color: #696969;
+    transform: translateY(-50%);
+    background-color: white;
+    display: flex;
+    align-items: center
+    }
+
 `;
  
 export default GlobalStyle;
