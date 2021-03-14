@@ -1,9 +1,10 @@
 import { Form } from '@unform/web';
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import Input from '../../components/Input';
 import api from '../../services/api';
 import Auth from '../../helpers/auth';
+import { UserContext } from '../../contexts/UserProvider';
 
 
 interface ILoginData{
@@ -14,6 +15,8 @@ interface ILoginData{
 const Login: React.FC = () => {
   const [error, setError] = useState("");
   const history = useHistory();
+  const {setUserInfo} = useContext(UserContext);
+
 
   async function handleLogin(data: ILoginData ){
     try{
@@ -22,6 +25,7 @@ const Login: React.FC = () => {
       const userInfo = JSON.stringify(response.data);
 
       Auth.setToken(userInfo);
+      setUserInfo();
       history.push('/')
 
     }catch(e){

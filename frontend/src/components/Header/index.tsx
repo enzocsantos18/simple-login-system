@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Options from '../Options'
 import { HeaderStyle } from './styles';
 
 const Header: React.FC = () => {
   return (
     <HeaderStyle>
-      <h1>Dashboard</h1>
+      <Link to="/"><h1>Dashboard</h1></Link>
       <Options />
     </HeaderStyle>
 

@@ -7,18 +7,25 @@ import Dashboard from "./pages/Dashboard";
 import Forgot from "./pages/Forgot";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import UserProvider from "./contexts/UserProvider";
+import UpdateUser from "./pages/UpdateUser";
+
 
 const Routes: React.FC = () => {
   return (
-    <Router>
-      <Switch>
-        <ProtectedRoute exact path="/" component={Dashboard} />
-        <GuestRoute path="/login" component={Login} />
-        <GuestRoute path="/register" component={Register} />
-        <GuestRoute path="/forgot" component={Forgot} />
-        <GuestRoute path="/auth/reset" component={ChangePassword} />
-      </Switch>
-    </Router>
+    <UserProvider>
+      <Router>
+        <Switch>
+          <ProtectedRoute exact path="/" component={Dashboard} />
+          <ProtectedRoute path="/user" component={UpdateUser} />
+
+          <GuestRoute path="/login" component={Login} />
+          <GuestRoute path="/register" component={Register} />
+          <GuestRoute path="/forgot" component={Forgot} />
+          <GuestRoute path="/auth/reset" component={ChangePassword} />
+        </Switch>
+      </Router>
+    </UserProvider>
   );
 };
 
