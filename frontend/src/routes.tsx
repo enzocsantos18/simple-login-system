@@ -1,30 +1,25 @@
-import React from 'react';
-
-import {BrowserRouter as Router,
-  Switch,
-  Route,
-} from 'react-router-dom';
-import ChangePassword from './pages/ChangePassword';
-import Forgot from './pages/Forgot';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import { UserContext } from './providers/UserProvider';
+import React from "react";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
+import GuestRoute from "./components/GuestRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
+import ChangePassword from "./pages/ChangePassword";
+import Dashboard from "./pages/Dashboard";
+import Forgot from "./pages/Forgot";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const Routes: React.FC = () => {
-  const {token} = React.useContext(UserContext);
-
-
-
   return (
     <Router>
       <Switch>
-        <Route exact path="/"><Login/></Route>
-        <Route path="/register"><Register/></Route>
-        <Route path="/forgot"><Forgot/></Route>
-        <Route path="/auth/reset"><ChangePassword/></Route>
+        <ProtectedRoute exact path="/" component={Dashboard} />
+        <GuestRoute path="/login" component={Login} />
+        <GuestRoute path="/register" component={Register} />
+        <GuestRoute path="/forgot" component={Forgot} />
+        <GuestRoute path="/auth/reset" component={ChangePassword} />
       </Switch>
     </Router>
   );
-}
+};
 
 export default Routes;

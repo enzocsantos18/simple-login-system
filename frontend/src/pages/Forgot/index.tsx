@@ -6,7 +6,8 @@ import * as Yup from "yup";
 import { useHistory } from "react-router";
 import { FormHandles } from "@unform/core";
 import { toast } from "react-toastify";
-// import { Container } from './styles';
+
+
 interface IFormData {
   email: string;
 }
@@ -33,7 +34,7 @@ const Forgot: React.FC = () => {
 
       formRef.current?.reset();
 
-      const response = await api.post("auth/forgot", data);
+      await api.post("auth/forgot", data);
 
       toast.success("Password change email send.");
       history.push("/");
@@ -61,8 +62,7 @@ const Forgot: React.FC = () => {
       <div className="container">
         <h1>Forgot</h1>
         <Form onSubmit={handleSubmit} ref={formRef}>
-          <label htmlFor="email">Email:</label>
-          <Input type="text" name="email" />
+          <Input label="Email:" type="text" name="email" />
           <button>Send</button>
         </Form>
       </div>

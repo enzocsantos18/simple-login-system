@@ -1,10 +1,10 @@
 import { Form } from '@unform/web';
-import React, {useState, useContext} from 'react';
-// import { Container } from './styles';
-import {Link} from 'react-router-dom';
+import React, {useState} from 'react';
+import {Link, useHistory} from 'react-router-dom';
 import Input from '../../components/Input';
-import { UserContext } from '../../providers/UserProvider';
 import api from '../../services/api';
+import Auth from '../../helpers/auth';
+
 
 interface ILoginData{
   email: string,
@@ -12,33 +12,30 @@ interface ILoginData{
 }
 
 const Login: React.FC = () => {
-  const {handleLogin} = React.useContext(UserContext);
   const [error, setError] = useState("");
+  const history = useHistory();
 
-
-  async function handleSubmit(data: ILoginData ){
+  async function handleLogin(data: ILoginData ){
     try{
 
       const response = await api.post('auth',data)
-      const userInfo = response.data;
+      const userInfo = JSON.stringify(response.data);
 
-      handleLogin(userInfo);
+      Auth.setToken(userInfo);
+      history.push('/')
 
     }catch(e){
       setError('Invalid login and/or password.')
     }
   }
 
-
+  
   return (
     <main>
       <div className="container">
-        <Form onSubmit={handleSubmit}>
-          <label htmlFor="email">Email:</label>
-          <Input type="text" name="email"/>
-
-          <label htmlFor="password">Password:</label>
-          <Input type="password" name="password"/>
+        <Form onSubmit={handleLogin}>
+          <Input label="Email: " type="text" name="email"/>
+          <Input label="Password: " type="password" name="password"/>
 
           {error && (<span style={{color: "red"}}>{error}</span>)}
           <Link to="/forgot"> Forgot Password?</Link>

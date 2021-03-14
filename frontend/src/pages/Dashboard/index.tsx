@@ -1,10 +1,15 @@
 import React from 'react';
-import { UserContext } from '../../providers/UserProvider';
+import { useHistory } from 'react-router';
+import Auth from '../../helpers/auth';
 
-// import { Container } from './styles';
 
 const Dashboard: React.FC = () => {
-  const {handleLogout} = React.useContext(UserContext);
+  const history = useHistory();
+ 
+  function handleLogout(): void {
+    Auth.destroyToken();
+    history.push('/login')
+  }
 
   return (
     <>

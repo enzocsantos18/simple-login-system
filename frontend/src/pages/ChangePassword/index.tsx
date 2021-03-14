@@ -6,7 +6,7 @@ import { useHistory, useLocation } from "react-router";
 import { FormHandles } from "@unform/core";
 import { toast } from "react-toastify";
 import Input from "../../components/Input";
-// import { Container } from './styles';
+
 interface IFormData {
   email: string | null;
   token: string | null;
@@ -52,7 +52,7 @@ const ChangePassword: React.FC = (props) => {
 
       formRef.current?.reset();
 
-      const response = await api.post("auth/reset", data);
+      await api.post("auth/reset", data);
 
       toast.success("Password changed.");
       history.push("/");
@@ -80,11 +80,8 @@ const ChangePassword: React.FC = (props) => {
       <div className="container">
         <h1>Change Password</h1>
         <Form onSubmit={handleSubmit} ref={formRef}>
-          <label htmlFor="password">New password:</label>
-          <Input type="password" name="password" />
-          <label htmlFor="password_confirmation">Confirm password:</label>
-          <Input type="password" name="password_confirmation" />
-
+          <Input label="Password:" type="password" name="password" />
+          <Input label="Password Confirmation:" type="password" name="password_confirmation" />
           <button>Change Password</button>
         </Form>
       </div>
