@@ -27,6 +27,9 @@ class User {
   @Column('text', { nullable: true, select: false })
   passwordResetToken: string;
 
+  @Column('text', { nullable: true })
+  emailVerificationToken: string;
+
   @Column('timestamptz', { nullable: true, select: false })
   passwordResetExpires: Date;
 

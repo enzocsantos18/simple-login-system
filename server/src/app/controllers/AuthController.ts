@@ -32,6 +32,8 @@ class AuthController {
     return res.json({
       id: user.id,
       email,
+      name: user.name,
+      isConfirmed: user.isConfirmed,
       token,
     });
   }
@@ -61,7 +63,7 @@ class AuthController {
         {
           to: email,
           from: 'enzocsantos18@gmail.com',
-          html: `<p>Para trocar sua senha <a href="http://localhost:3000/auth/reset?token=${token}">Clique aqui</a></p>`,
+          html: `<p>To change your password click <a href="http://localhost:3000/auth/reset?token=${token}&email=${email}">in this link</a></p>`,
         },
         err => {
           return res

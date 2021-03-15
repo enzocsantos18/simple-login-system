@@ -4,7 +4,9 @@ class Auth {
   }
 
   public getToken() {
-    return localStorage.getItem("auth");
+    const infos  = JSON.parse(localStorage.getItem("auth") as string);
+    
+    return infos ? infos.token : null;
   }
 
   public setToken(token: string): void {

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import * as Yup from 'yup';
+import crypto from 'crypto';
 import User from '../models/User';
 
 interface UserInterface {
@@ -36,12 +37,14 @@ class UserController {
     if (userExists) {
       return res.status(400).json({ error: 'User already exists' });
     }
+    const token = crypto.randomBytes(128).toString('hex');
 
     const user = UserRepository.create({
       name,
       email,
       password,
       isConfirmed: false,
+      emailVerificationToken: token,
     } as UserInterface);
 
     await UserRepository.save(user);

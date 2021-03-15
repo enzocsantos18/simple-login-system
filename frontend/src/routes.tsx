@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UserProvider from "./contexts/UserProvider";
 import UpdateUser from "./pages/UpdateUser";
+import EmailConfirmationPage from "./pages/EmailConfirmationPage";
 
 
 const Routes: React.FC = () => {
@@ -17,8 +18,9 @@ const Routes: React.FC = () => {
       <Router>
         <Switch>
           <ProtectedRoute exact path="/" component={Dashboard} />
-          <ProtectedRoute path="/user" component={UpdateUser} />
-
+          <ProtectedRoute exact path="/user"  component={UpdateUser} />
+          
+          <ProtectedRoute path="/user/emailConfirmation" component={EmailConfirmationPage} />
           <GuestRoute path="/login" component={Login} />
           <GuestRoute path="/register" component={Register} />
           <GuestRoute path="/forgot" component={Forgot} />
